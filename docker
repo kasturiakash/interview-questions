@@ -1,0 +1,12 @@
+Q)what is docker?
+Q)how containers are different from vm's?
+Q)docker life cycle?
+Q)different docker components?
+Q)diff between copy and add?
+Q)diff between CMD and ENTRYPOINT?
+Q)networking types in docker and what is default?
+Q)explain how to isolate networking between the containers?
+Q)multi stage build in docker?
+Q)what are distroless images in docker?
+Q)real time challenges with docker?
+Q)what steps would you take to secure containers?
