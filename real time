@@ -1,0 +1,16 @@
+Q)pipeline,stages and example?
+A)compile,test,sonar analysis,owasp,build, pushing docker to nexus, build and tag docker images, trivy to scan images
+Q) what is sonarqube why it is used?
+sonarqube is a tool for performing code quality check and code coverage 
+Q)what is difference between code quality check and code coverage And difference between Test cases vs code coverage?
+A) code quality it was the  amount of bugs,vulnerabilities,code smell We have in our code lesser  these number issues then better is code quality 
+Whenever we have test cases for a application Can we run this test cases whatever the percentage of the code covered One of the error that I have faced is one 37 that is out of space
+Test cases are written to test the functionality  of the code and Percentage of the code covered by running test cases that is code coverage
+Q) nexus and how do you manage the artifacts ?
+A) Its a artifact repository
+In Nexus we have clean up policies option Here we can define like if  a artifact  is older than 90 days then it can be automatically removed
+Q)  What kind of error have you faced when you  used maven? 
+A) One of the errors I have faced with Maven is 137 That means out of memory means  Memory is not sufficient to run the pipeline further To fix this issue I have used Java opts  like xmx and xms values these two refers like initial memory and maximum memory Like initially the memory shuld be used is 500MB and maximum it could go to 2GB
+second Error that in some cases the client test cases are failing but still they want to test the code and other functionalities in that cases we suggested him to skip test cases in mean time by using "-Dskip.Tests=true" 
+
+
