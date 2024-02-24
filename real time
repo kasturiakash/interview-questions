@@ -12,5 +12,209 @@ In Nexus we have clean up policies option Here we can define like if  a artifact
 Q)  What kind of error have you faced when you  used maven? 
 A) One of the errors I have faced with Maven is 137 That means out of memory means  Memory is not sufficient to run the pipeline further To fix this issue I have used Java opts  like xmx and xms values these two refers like initial memory and maximum memory Like initially the memory shuld be used is 500MB and maximum it could go to 2GB
 second Error that in some cases the client test cases are failing but still they want to test the code and other functionalities in that cases we suggested him to skip test cases in mean time by using "-Dskip.Tests=true" 
+Q)sample docker image for java based app?
+A) 
+FROM <imagename like openjdk>
+COPY target/*jar app.jar
+EXPOSE 8080
+CMD["java","-jar","app.jar"]
 
 
+ DevOps Interview Questions
+1. About Myself: My name is ABC, I have completed my Btech in CS in 2020 & since then
+working as a devops engineer in XYZ company. there I was a shared resource working
+on multiple projects. explain in short about projects, ur role & tools used
+2. Pipeline Stages: In a typical CI/CD pipeline, stages might include:
+o Checkout: Fetching the source code from the repository.
+o Build: Compiling the code and generating artifacts.
+o Test: Running unit tests and possibly integration tests.
+o Code Analysis: Conducting static code analysis, which can include code quality
+checks, security scans, etc.
+o Build: Build & Packaging the application or service for deployment.
+o Docker: Create the docker image, tag it
+o Trivy: Scan Docker Image for vulnerabilties
+o Push Docker Image: Push Docker Image to Private Docker Registry
+o Manifests Files: Using Manifests Files to deploy the application on K8
+o Post-build Actions: Notifications, reporting, and cleanup tasks.
+3. Example Pipeline in Jenkins: Here's a simple Jenkins pipeline script:
+pipeline {
+ agent any
+ stages {
+ stage('Build') {
+ steps {
+ sh 'mvn clean package'
+ }
+ }
+ stage('Test') {
+ steps {
+ sh 'mvn test'
+ }
+ }
+ stage('SonarQube Analysis') {
+ steps {
+ // Execute SonarQube analysis
+ }
+ }
+ stage('Deploy') {
+ steps {
+ // Deploy artifacts
+ }
+ }
+ }
+}
+4. SonarQube Code Quality vs Code Coverage:
+o Code Quality: Refers to how well-written and maintainable the code is. It
+includes aspects like coding standards adherence, complexity, duplications, etc.
+o Code Coverage: Refers to the percentage of code covered by automated tests.
+It indicates how much of your codebase is tested, helping to identify areas that
+may lack sufficient testing.
+5. Version of SonarQube: You can mention specific versions or LTS.
+6. Nexus Artifact Management: Nexus allows you to manage artifacts by defining
+cleanup policies. You can configure these policies to automatically remove artifacts
+based on criteria such as age, number of downloads, or a custom attribute.
+7. Maven Error Troubleshooting:
+o Error code 137 usually indicates a container being killed due to resource
+constraints.
+o If test cases are failing and we need to still run the code to check functionality
+the we can skip test cases with command. -DskipTests=true
+8. Trivy JSON Format Report: To generate a Trivy JSON format report, you can use the
+command: trivy image --format json -o report.json image_name.
+9. Docker Network Information: To get information about Docker networks, you can
+use the command: docker network inspect network_name.
+10. Creation of SonarQube Container: To create a Docker container named "sonar" with
+host port 8081 mapped to container port 9000, you can use the command: docker
+run -d -p 8081:9000 --name sonar sonarqube:latest.
+11. Debugging Docker Container: You can debug a Docker container by accessing its
+logs (docker logs container_name), executing commands inside the container
+(docker exec -it container_name bash), or inspecting its configuration (docker
+inspect container_name).
+12. Sample Dockerfile for SonarQube:
+13. adduser vs useradd:
+o Both adduser and useradd are commands used for adding users in Unix/Linux
+systems. adduser is more user-friendly and interactive, while useradd is used
+for scripting and automation.
+14. Permissions to Execute on a File: You can grant execute permissions on a file using
+the chmod +x filename command.
+15. Kubernetes Architecture:
+o Kubernetes follows a master-slave architecture. The master node manages the
+cluster, scheduling tasks, and maintaining the desired state. Worker nodes
+execute application workloads.
+o https://youtu.be/L8n_HYDnq_I
+16. Service Types in Kubernetes:
+1. ClusterIP:
+o Description: Exposes the service on a cluster-internal IP. This type makes the service
+reachable only from within the cluster.
+o Use Case: Typically used for internal communication between different components
+of an application running within the same Kubernetes cluster.
+2. NodePort:
+o Description: Exposes the service on each node's IP at a static port. This means that
+the service is accessible via any node’s IP address and the static port.
+o Use Case: Useful when you need to make a service accessible from outside the
+Kubernetes cluster, such as for testing or development purposes. However, not
+recommended for production use due to potential security concerns.
+3. LoadBalancer:
+o Description: Creates an external load balancer in the cloud provider's environment
+(e.g., AWS, Azure, GCP) and assigns a fixed, external IP address to the service.
+Incoming traffic to this IP address is routed to the service within the Kubernetes
+cluster.
+o Use Case: Ideal for exposing a service to the internet or to external clients, providing
+a stable and reliable endpoint for accessing the application. Commonly used for
+production deployments.
+4. Ingress:
+o Description: Manages external access to services within a Kubernetes cluster. It
+provides features like TLS termination, routing, and load balancing based on URL
+paths or domain names.
+o Use Case: Suitable for managing HTTP and HTTPS traffic to applications within the
+cluster, providing advanced routing and traffic management capabilities.
+o NodePort: Exposes the service on each node's IP at a static port. Not
+recommended for production use due to security concerns.
+o LoadBalancer: Provides an externally accessible IP address that forwards traffic
+to the service.
+o The choice between NodePort and LoadBalancer depends on your
+requirements and infrastructure setup.
+17. Secrets in Kubernetes:
+o Kubernetes Secrets are used to store sensitive information like passwords, API
+keys, and tokens. They're stored securely within the cluster and can be
+mounted into pods as environment variables or files.
+18. Azure AKS Deployment:
+o To deploy to Azure Kubernetes Service (AKS) using Azure Classic Pipelines, you
+can follow these general steps. Please note that the exact steps might vary
+based on your specific project setup and requirements.
+i. Set up Azure Classic Pipelines: Ensure you have an Azure DevOps organization set up and
+access to the Azure Classic Pipelines feature.
+ii. Configure Azure DevOps Service Connection: You need to create a service connection in
+Azure DevOps to allow your pipeline to interact with Azure resources. Follow these steps:
+• In Azure DevOps, navigate to your project settings.
+•Under Pipelines, select Service connections.
+•Click on New service connection and choose Azure Resource Manager.
+• Follow the prompts to sign in to your Azure account and select the appropriate
+subscription and resource group.
+iii. Create an Azure Classic Pipeline:
+• In Azure DevOps, navigate to your project and select Pipelines.
+•Click on New pipeline.
+•Choose the location of your source code (e.g., Azure Repos Git, GitHub, Bitbucket, etc.).
+• Select the repository containing your application code.
+iv. Define Pipeline Steps:
+•Define the steps in your pipeline YAML or through the visual editor. You'll need steps to
+build your application, containerize it, and deploy it to AKS.
+•Here's a simplified example of a pipeline YAML:
+trigger:
+- main
+pool:
+ vmImage: 'ubuntu-latest'
+steps:
+- script: echo Build your application
+ displayName: 'Build'
+- task: Docker@2
+ inputs:
+ containerRegistry: 'your_container_registry_connection_name'
+ repository: 'your_container_registry/repository_name'
+ command: 'build'
+ Dockerfile: 'path_to_your_dockerfile'
+ tags: 'latest'
+- task: Kubernetes@1
+ inputs:
+ connectionType: 'Azure Resource Manager'
+ azureSubscriptionEndpoint: 'your_azure_subscription_connection_name'
+ azureResourceGroup: 'your_aks_resource_group'
+ kubernetesCluster: 'your_aks_cluster_name'
+ command: 'apply'
+ arguments: '-f path_to_your_kubernetes_manifests'
+v. Replace Placeholder Values:
+•Replace placeholder values
+like your_container_registry_connection_name, path_to_your_dockerfile, your_a
+zure_subscription_connection_name, etc., with the actual names and paths from
+your Azure DevOps setup and Azure resources.
+vi. Commit and Trigger Pipeline:
+•Once your pipeline definition is ready, commit the changes to your repository.
+• This should trigger the pipeline to run, which will build your application, create a Docker
+image, and deploy it to AKS.
+vii. Review and Monitor Pipeline Execution:
+•Monitor the pipeline execution in Azure DevOps to ensure it completes successfully.
+•Review the logs and any potential errors to troubleshoot if needed.
+viii. Validate Deployment:
+•After the pipeline completes, validate that your application is deployed and running
+correctly on AKS.
+20. Sample Pipeline YAML: Here's a basic example of a pipeline YAML for Azure DevOps:
+trigger:
+- main
+pool:
+ vmImage: 'ubuntu-latest'
+steps:
+- task: Maven@3
+ inputs:
+ mavenPomFile: 'pom.xml'
+ goals: 'clean compile'
+- task: Maven@3
+ inputs:
+ mavenPomFile: 'pom.xml'
+ goals: 'test'
+- task: Maven@3
+ inputs:
+ mavenPomFile: 'pom.xml'
+ goals: 'package'
+ options: '-DskipTests=true'
+- task: PublishBuildArtifacts@1
+ inputs:
+ pathtoPublish: '$(Build.SourcesDirectory)/target'
+ artifactName: 'my-java-app'
